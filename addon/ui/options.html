@@ -2,9 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>MultiButton Settings</title>
+
+    <link rel="stylesheet" type="text/css" media="all" href="options.css"/>
+
+    <script src="../global.js"></script>
+    <script src="../lib/jquery.js"></script>
+    <script src="options.js" type="module"></script>
 </head>
 <body>
+    <div id="settings-container">
+        <h2>MultiButton Options</h2>
+        <h3>Button Icon</h3>
+        <input id="button-icon-url" type="text" placeholder="URL"/>
+        <h3>Links</h3>
+        <table id="links"></table>
+        <div id="after-links"><a id="help" href="#" target="_blank">Help</a></div>
+    </div>
 
+    <template id="link-row-template">
+        <tr class="link">
+            <td><input type="checkbox" class="enable-check" title="Enabled"/></td>
+            <td class="link-title"><input type="text" class="title-text" placeholder="Title" value=""/></td>
+            <td class="link-url"><div><input type="text" class="url-text" placeholder="URL" value=""/></div></td>
+            <td class="link-threshold"><input type="text" class="threshold-text" placeholder="Time Threshold" value=""/></td>
+            <td class="link-controls"><!--
+                --><span class="link-move-down" title="Movie Down">&#x25BC;</span><!--
+                --><span class="link-move-up" title="Movie Up">&#x25B2;</span><!--
+                -->&nbsp;<span class="link-remove" title="Remove">&#x2716;</span><!--
+                -->&nbsp;<span class="link-add" title="Add New Link">&#x271A;</span><!--
+            --></td>
+        </tr>
+    </template>
 </body>
 </html>

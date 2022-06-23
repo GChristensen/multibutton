@@ -5,7 +5,6 @@ const SETTINGS_KEY = "multibutton-settings";
 class Settings {
     constructor() {
         this._default = {
-
         };
 
         this._bin = {};
@@ -14,7 +13,7 @@ class Settings {
 
     async _load() {
         const object = await browser.storage.local.get(this._key);
-        this._bin = merge(object[this._key] || {}, this._default);
+        this._bin = merge(object?.[this._key] || {}, this._default);
     }
 
     async _save() {
@@ -23,7 +22,7 @@ class Settings {
 
     get(target, key, receiver) {
         if (key === "load")
-            return this._load;
+            return v => this._load(); // sic!
         else if (key === "default")
             return this._default;
 
@@ -57,7 +56,4 @@ class Settings {
 
 export let settings = new Proxy({}, new Settings());
 
-chrome.storage.onChanged.addListener(function (changes, areaName) {
-    if (changes[SETTINGS_KEY])
-        settings.load();
-});
+await settings.load();

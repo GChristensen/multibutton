@@ -1,0 +1,56 @@
+* {
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+#settings-container {
+    width: 70%;
+    margin: auto;
+}
+
+#button-icon-url {
+    width: 100%;
+}
+
+#links {
+    width: 100%;
+}
+
+.link-url, .link-url div {
+    width: 100%;
+}
+
+.link-url div {
+    display: flex;
+}
+
+.url-text {
+    flex: 1 0 auto;
+}
+
+.link-title, .link-url, .link-threshold {
+    padding: 5px;
+}
+
+.link-controls {
+    padding-left: 5px;
+}
+
+.title-text {
+    width: 300px;
+}
+
+.threshold-text {
+    width: 150px;
+}
+
+.link-move-up, .link-move-down, .link-remove, .link-add {
+    cursor: pointer;
+}
+
+#after-links {
+    width: 100%;
+    text-align: right;
+    margin-top: 10px;
+    padding-top: 5px;
+    border-top: 1px solid black;
+}

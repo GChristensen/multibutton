@@ -1,9 +1,22 @@
+import {settings} from "./settings.js";
+
 const action = _MANIFEST_V3? browser.action: browser.browserAction;
+
+const buttonIconURL = settings.buttonIconURL();
+if (buttonIconURL)
+    action.setIcon({path: {16: buttonIconURL, 24: buttonIconURL}});
 
 action.onClicked.addListener(actionOnClick);
 
-function actionOnClick() {
+async function actionOnClick() {
+    await settings.load();
 
+    const links = settings.links();
+
+    if (links)
+        for (const link of links)
+            if (link.enabled)
+                browser.tabs.create({url: link.url, active: false});
 }
 
 const contextMenus = {};
