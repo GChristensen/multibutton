@@ -1,0 +1,32 @@
+{
+  "description": "MultiButton",
+  "manifest_version": 2,
+  "name": "MultiButton",
+  "version": "0.0.1",
+
+  "icons": {
+    "48": "ui/icons/logo.svg"
+  },
+
+  "applications": {
+    "gecko": {
+      "id": "muitibutton@gchristensen.github.io",
+      "strict_min_version": "91.0"
+    }
+  },
+
+  "background": {
+    "page": "background.html"
+  },
+
+  "browser_action": {
+    "default_icon": "ui/icons/logo.svg"
+  },
+
+  "options_ui": {
+    "page": "ui/options.html",
+    "browser_style": true
+  },
+
+  "permissions": ["contextMenus", "storage"]
+}

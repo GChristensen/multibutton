@@ -1,0 +1,4 @@
+theme: jekyll-theme-minimal
+title: MultiButton extension
+description: Open several links with just one click
+logo: addon/ui/icons/logo.svg
