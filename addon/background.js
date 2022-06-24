@@ -1,10 +1,11 @@
 import {settings} from "./settings.js";
+import {setActionIcon} from "./utils.js";
+import {contextMenu} from "./ui/contextmenu.js";
 
 const action = _MANIFEST_V3? browser.action: browser.browserAction;
 
 const buttonIconURL = settings.buttonIconURL();
-if (buttonIconURL)
-    action.setIcon({path: {16: buttonIconURL, 24: buttonIconURL}});
+setActionIcon(buttonIconURL);
 
 action.onClicked.addListener(actionOnClick);
 
@@ -13,28 +14,21 @@ async function actionOnClick() {
 
     const links = settings.links();
 
-    if (links)
+    if (links?.length) {
         for (const link of links)
             if (link.enabled)
                 browser.tabs.create({url: link.url, active: false});
+    }
+    else
+        showOptions();
 }
 
-const contextMenus = {};
-
-function createContextMenuItem(title, handler) {
-    const id = `menu-${title}`;
-
-    browser.contextMenus.create({id, title, contexts: ["browser_action"]});
-
-    contextMenus[id] = handler;
-}
-
-browser.contextMenus.onClicked.addListener((info, tab) => {
-    const handler = contextMenus[info.menuItemId];
-
-    handler && handler(info);
-})
-
-createContextMenuItem("Settings", () => {
+function showOptions() {
     browser.tabs.create({url: "ui/options.html", active: true});
+}
+
+contextMenu.create();
+
+browser.contextMenus.onClicked.addListener(menuInfo => {
+    browser.tabs.create({url: menuInfo.menuItemId, active: true});
 });

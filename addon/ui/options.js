@@ -1,4 +1,6 @@
 import {settings} from "../settings.js";
+import {setActionIcon} from "../utils.js";
+import {contextMenu} from "./contextmenu.js";
 
 $(initPage);
 
@@ -10,16 +12,16 @@ async function initPage() {
 
     const links = settings.links();
 
-    if (links)
+    if (links?.length)
         for (const link of links)
             addLink(link);
     else
-        addLink({enabled: true});
+        addNewLink();
 
     const linksTable = $("#links");
 
     linksTable.on("click", ".link-add", e => {
-        addLink({enabled: true}, $(e.target).closest("tr.link"));
+        addNewLink($(e.target).closest("tr.link"));
     });
 
     linksTable.on("click", ".link-remove", e => {
@@ -36,15 +38,9 @@ async function initPage() {
 }
 
 function changeIcon() {
-    const action = _MANIFEST_V3? browser.action: browser.browserAction;
     const buttonIconURL = $("#button-icon-url").val();
-
-    if (buttonIconURL)
-        action.setIcon({path: {16: buttonIconURL, 24: buttonIconURL}});
-    else
-        action.setIcon({path: "/ui/icons/logo.svg"});
-
     settings.buttonIconURL(buttonIconURL);
+    setActionIcon(buttonIconURL);
 }
 
 function addLink(options, sibling) {
@@ -69,11 +65,23 @@ function addLink(options, sibling) {
     $(".threshold-text", linkTR).on("blur", saveOptions);
 }
 
+function addNewLink(sibling) {
+    const newLink = {enabled: true};
+
+    if (sibling)
+        addLink(newLink, sibling);
+    else
+        addLink(newLink);
+}
+
 function removeLink(object) {
     const title = $(".title-text", object).val();
     if (confirm(`Do you really want to remove "${title}"`)) {
         object.remove();
         saveOptions();
+
+        if (!$("tr.link").length)
+            addNewLink();
     }
 }
 
@@ -143,4 +151,6 @@ async function saveOptions() {
     let links = $("tr.link").map(getLinkOptions);
     links = Array.from(links).filter(l => !!l);
     await settings.links(links);
+
+    await contextMenu.create();
 }
