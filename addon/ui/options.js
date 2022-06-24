@@ -35,6 +35,10 @@ async function initPage() {
     linksTable.on("click", ".link-move-down", e => {
         moveDownLink($(e.target).closest("tr.link"));
     });
+
+    $("#export-settings").on("click", exportSettings);
+    $("#import-settings").on("click", importSettings);
+    $("#import-settings-file-picker").on("change", readSettingsFile);
 }
 
 function changeIcon() {
@@ -59,10 +63,10 @@ function addLink(options, sibling) {
     $(".url-text", linkTR).val(options.url || "");
     $(".threshold-text", linkTR).val(options.threshold || "");
 
-    $(".enable-check", linkTR).on("change", saveOptions);
-    $(".title-text", linkTR).on("blur", saveOptions);
-    $(".url-text", linkTR).on("blur", saveOptions);
-    $(".threshold-text", linkTR).on("blur", saveOptions);
+    $(".enable-check", linkTR).on("change", saveSettings);
+    $(".title-text", linkTR).on("blur", saveSettings);
+    $(".url-text", linkTR).on("blur", saveSettings);
+    $(".threshold-text", linkTR).on("blur", saveSettings);
 }
 
 function addNewLink(sibling) {
@@ -78,7 +82,7 @@ function removeLink(object) {
     const title = $(".title-text", object).val();
     if (confirm(`Do you really want to remove "${title}"`)) {
         object.remove();
-        saveOptions();
+        saveSettings();
 
         if (!$("tr.link").length)
             addNewLink();
@@ -104,7 +108,7 @@ function moveUpLink(object) {
     
     if (prev.length) {
         exchangeLinks(object, prev);
-        saveOptions();
+        saveSettings();
     }
 }
 
@@ -113,7 +117,7 @@ function moveDownLink(object) {
 
     if (next.length) {
         exchangeLinks(object, next);
-        saveOptions();
+        saveSettings();
     }
 }
 
@@ -143,7 +147,7 @@ function exchangeLinks(object, other) {
     $(".threshold-text", other).val(threshold);
 }
 
-async function saveOptions() {
+async function saveSettings() {
     await settings.load();
 
     await settings.buttonIconURL($("#button-icon-url").val());
@@ -153,4 +157,52 @@ async function saveOptions() {
     await settings.links(links);
 
     await contextMenu.create();
+}
+
+async function exportSettings(e) {
+    e.preventDefault();
+
+    let exported = {};
+    exported.addon = "MultiButton";
+    exported.version = browser.runtime.getManifest().version;
+
+    exported.settings = await browser.storage.local.get() || {};
+
+    // download link
+    let file = new Blob([JSON.stringify(exported, null, 2)], {type: "application/json"});
+    let url = URL.createObjectURL(file);
+    let filename = "multibutton-settings.json";
+
+    let download = await browser.downloads.download({url: url, filename: filename, saveAs: true});
+
+    let download_listener = delta => {
+        if (delta.id === download && delta.state && delta.state.current === "complete") {
+            browser.downloads.onChanged.removeListener(download_listener);
+            URL.revokeObjectURL(url);
+        }
+    };
+    browser.downloads.onChanged.addListener(download_listener);
+}
+
+async function importSettings(e) {
+    e.preventDefault();
+
+    $("#import-settings-file-picker").click();
+}
+
+async function readSettingsFile(e) {
+    let reader = new FileReader();
+    reader.onload = async function(re) {
+        let imported = JSON.parse(re.target.result);
+
+        if (imported.addon !== "MultiButton") {
+            showNotification("Export format is not supported.");
+            return;
+        }
+
+        await browser.storage.local.set(imported.settings);
+
+        chrome.runtime.reload();
+    };
+    reader.readAsText(e.target.files[0]);
 }

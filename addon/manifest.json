@@ -25,8 +25,8 @@
 
   "options_ui": {
     "page": "ui/options.html",
-    "browser_style": true
+    "open_in_tab": true
   },
 
-  "permissions": ["contextMenus", "storage"]
+  "permissions": ["contextMenus", "storage", "downloads"]
 }

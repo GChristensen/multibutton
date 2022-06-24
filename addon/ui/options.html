@@ -17,7 +17,11 @@
         <input id="button-icon-url" type="text" placeholder="URL"/>
         <h3>Links</h3>
         <table id="links"></table>
-        <!--div id="after-links"><a id="help" href="#" target="_blank"></a></div-->
+        <div id="after-links">
+            <a id="export-settings" href="#">Export Settings</a>
+            / <a id="import-settings" href="#">Import Settings</a>
+            <input type="file" id="import-settings-file-picker"/>
+        </div>
     </div>
 
     <template id="link-row-template">
@@ -25,7 +29,7 @@
             <td><input type="checkbox" class="enable-check" title="Enabled"/></td>
             <td class="link-title"><input type="text" class="title-text" placeholder="Title" value=""/></td>
             <td class="link-url"><div><input type="text" class="url-text" placeholder="URL" value=""/></div></td>
-            <td class="link-threshold"><input type="text" class="threshold-text" placeholder="Time Threshold, e.g.: >15:00" value=""/></td>
+            <td class="link-threshold"><input type="text" class="threshold-text" placeholder="Time, e.g.: >15:00" value=""/></td>
             <td class="link-controls"><!--
                 --><span class="link-move-down" title="Movie Down">&#x25BC;</span><!--
                 --><span class="link-move-up" title="Movie Up">&#x25B2;</span><!--

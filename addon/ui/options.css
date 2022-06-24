@@ -40,7 +40,7 @@
 }
 
 .threshold-text {
-    width: 180px;
+    width: 120px;
 }
 
 .link-move-up, .link-move-down, .link-remove, .link-add {
@@ -53,4 +53,8 @@
     margin-top: 10px;
     padding-top: 5px;
     border-top: 1px solid black;
+}
+
+#import-settings-file-picker {
+    display: none;
 }
