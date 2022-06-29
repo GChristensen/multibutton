@@ -80,7 +80,8 @@ function addNewLink(sibling) {
 
 function removeLink(object) {
     const title = $(".title-text", object).val();
-    if (confirm(`Do you really want to remove "${title}"`)) {
+    const url = $(".url-text", object).val();
+    if (!(title || url) || confirm(`Do you really want to remove ${title? `"${title}"`: "this item"}?`)) {
         object.remove();
         saveSettings();
 
