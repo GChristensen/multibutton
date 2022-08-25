@@ -19,7 +19,7 @@ async function actionOnClick() {
         for (const link of links)
             if (link.enabled) {
                 if (!link.threshold || new Threshold(link.threshold).satisfies())
-                    browser.tabs.create({url: link.url, active: false});
+                    browser.tabs.create({url: link.url, active: link.active});
             }
     }
     else

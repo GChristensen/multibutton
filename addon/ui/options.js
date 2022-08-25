@@ -36,6 +36,7 @@ async function initPage() {
         moveDownLink($(e.target).closest("tr.link"));
     });
 
+    $("#no-active-tab").on("change", saveSettings);
     $("#export-settings").on("click", exportSettings);
     $("#import-settings").on("click", importSettings);
     $("#import-settings-file-picker").on("change", readSettingsFile);
@@ -58,11 +59,13 @@ function addLink(options, sibling) {
     else
         linkTR.appendTo(linkTable);
 
+    $(".active-tab-radio", linkTR).prop("checked", options.active)
     $(".enable-check", linkTR).prop("checked", options.enabled)
     $(".title-text", linkTR).val(options.title || "");
     $(".url-text", linkTR).val(options.url || "");
     $(".threshold-text", linkTR).val(options.threshold || "");
 
+    $(".active-tab-radio", linkTR).on("change", saveSettings);
     $(".enable-check", linkTR).on("change", saveSettings);
     $(".title-text", linkTR).on("blur", saveSettings);
     $(".url-text", linkTR).on("blur", saveSettings);
@@ -94,6 +97,7 @@ function getLinkOptions(i, linkTR) {
     linkTR = $(linkTR);
 
     const link = {
+        active: $(".active-tab-radio", linkTR).is(":checked"),
         enabled: $(".enable-check", linkTR).is(":checked"),
         title: $(".title-text", linkTR).val(),
         url: $(".url-text", linkTR).val(),
@@ -123,25 +127,29 @@ function moveDownLink(object) {
 }
 
 function exchangeLinks(object, other) {
-    const [checked, title, url, threshold] = [
+    const [activeTab, checked, title, url, threshold] = [
+        $(".active-tab-radio", object).is(":checked"),
         $(".enable-check", object).is(":checked"),
         $(".title-text", object).val(),
         $(".url-text", object).val(),
         $(".threshold-text", object).val()
     ];
 
-    const [otherChecked, otherTitle, otherUrl, otherThreshold] = [
+    const [otherActiveTab, otherChecked, otherTitle, otherUrl, otherThreshold] = [
+        $(".active-tab-radio", other).is(":checked"),
         $(".enable-check", other).is(":checked"),
         $(".title-text", other).val(),
         $(".url-text", other).val(),
         $(".threshold-text", other).val()
     ];
 
+    $(".active-tab-radio", object).prop("checked", otherActiveTab);
     $(".enable-check", object).prop("checked", otherChecked);
     $(".title-text", object).val(otherTitle);
     $(".url-text", object).val(otherUrl);
     $(".threshold-text", object).val(otherThreshold);
 
+    $(".active-tab-radio", other).prop("checked", activeTab);
     $(".enable-check", other).prop("checked", checked);
     $(".title-text", other).val(title);
     $(".url-text", other).val(url);
