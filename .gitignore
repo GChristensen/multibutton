@@ -1,4 +1,4 @@
 .idea
 *.iml
-/addon/web-ext-artifacts
+/build
 /addon/.web-extension-id
