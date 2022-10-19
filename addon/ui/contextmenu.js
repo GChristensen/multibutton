@@ -23,20 +23,6 @@ class ContextMenu {
         this.#createContextMenuItem("Settings", SETTINGS_URL);
     }
 
-
-
-    #clear() {
-        const links = settings.links();
-
-        if (links?.length) {
-            for (const link of links)
-                this.#removeContextMenuItem(link.url);
-        }
-
-        this.#removeContextMenuItem("separator");
-        this.#removeContextMenuItem(SETTINGS_URL);
-    }
-
     #createContextMenuItem(title, url) {
         browser.contextMenus.create({id: url, title, contexts: ["browser_action"]});
     }
@@ -47,6 +33,10 @@ class ContextMenu {
 
     #removeContextMenuItem(id) {
         browser.contextMenus.remove(id);
+    }
+
+    #clear() {
+        browser.contextMenus.removeAll();
     }
 }
 

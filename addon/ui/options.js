@@ -42,6 +42,12 @@ async function initPage() {
     $("#import-settings-file-picker").on("change", readSettingsFile);
 }
 
+window.onbeforeunload = function() {
+    saveSettings();
+
+    return undefined;
+};
+
 function changeIcon() {
     const buttonIconURL = $("#button-icon-url").val();
     settings.buttonIconURL(buttonIconURL);

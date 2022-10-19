@@ -2,7 +2,7 @@
   "description": "MultiButton",
   "manifest_version": 2,
   "name": "MultiButton",
-  "version": "0.2",
+  "version": "0.2.1",
 
   "icons": {
     "48": "ui/icons/logo.svg"
@@ -10,7 +10,7 @@
 
   "applications": {
     "gecko": {
-      "id": "muitibutton-we@gchristensen.github.io",
+      "id": "muitibutton@gchristensen.github.io",
       "strict_min_version": "91.0"
     }
   },
