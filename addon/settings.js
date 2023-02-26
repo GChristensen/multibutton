@@ -55,5 +55,3 @@ class Settings {
 }
 
 export let settings = new Proxy({}, new Settings());
-
-await settings.load();

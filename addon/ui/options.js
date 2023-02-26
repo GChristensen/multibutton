@@ -1,14 +1,19 @@
 import {settings} from "../settings.js";
-import {setActionIcon} from "../utils.js";
+import {setActionIcon, setActionTitle} from "../utils.js";
 import {contextMenu} from "./contextmenu.js";
 
 $(initPage);
 
 async function initPage() {
-    const butonIconURLText = $("#button-icon-url");
+    const buttonIconURLText = $("#button-icon-url");
     const buttonIconURL = settings.buttonIconURL();
-    butonIconURLText.val(buttonIconURL);
-    butonIconURLText.on("input", changeIcon);
+    buttonIconURLText.val(buttonIconURL);
+    buttonIconURLText.on("input", changeIcon);
+
+    const buttonTitleText = $("#button-title");
+    const buttonTitle = settings.buttonTitle() || "";
+    buttonTitleText.val(buttonTitle);
+    buttonTitleText.on("input", changeTitle);
 
     const links = settings.links();
 
@@ -52,6 +57,12 @@ function changeIcon() {
     const buttonIconURL = $("#button-icon-url").val();
     settings.buttonIconURL(buttonIconURL);
     setActionIcon(buttonIconURL);
+}
+
+function changeTitle() {
+    const buttonTitle = $("#button-title").val();
+    settings.buttonTitle(buttonTitle);
+    setActionTitle(buttonTitle);
 }
 
 function addLink(options, sibling) {

@@ -1,8 +1,8 @@
 {
   "description": "MultiButton",
   "manifest_version": 3,
-  "name": "MultiButton",
-  "version": "0.3",
+  "name": "$ADDON_NAME$",
+  "version": "$VERSION$",
 
   "icons": {
     "48": "ui/icons/logo.svg"
@@ -10,7 +10,7 @@
 
   "browser_specific_settings": {
     "gecko": {
-      "id": "muitibutton@gchristensen.github.io",
+      "id": "muitibutton$ID_SUFFIX$$REPLICA$@gchristensen.github.io",
       "strict_min_version": "91.0"
     }
   },

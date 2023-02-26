@@ -7,6 +7,26 @@
     margin: auto;
 }
 
+#button-properties-container {
+    display: flex;
+    width: 100%;
+}
+
+#button-properties-container div:nth-child(1) {
+    flex-shrink: 1;
+    flex-basis: 360px;
+    padding-right: 25px;
+}
+
+#button-properties-container div:nth-child(2) {
+    flex-grow: 1;
+    padding-right: 90px;
+}
+
+#button-properties-container input {
+    width: 100%;
+}
+
 #button-icon-url {
     width: 100%;
 }

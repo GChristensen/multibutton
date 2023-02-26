@@ -14,3 +14,13 @@ export function setActionIcon(icon) {
     else
         action.setIcon({path: "/ui/icons/logo.svg"});
 }
+
+export function setActionTitle(title) {
+    const action = _MANIFEST_V3? browser.action: browser.browserAction;
+
+    if (title)
+        action.setTitle({title});
+    else
+        action.setTitle({title: _ADDON_NAME});
+
+}

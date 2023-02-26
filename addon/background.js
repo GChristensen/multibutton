@@ -1,15 +1,11 @@
 import {settings} from "./settings.js";
-import {setActionIcon} from "./utils.js";
+import {setActionIcon, setActionTitle} from "./utils.js";
 import {contextMenu} from "./ui/contextmenu.js";
 import {Threshold} from "./threshold.js";
 
 const action = _MANIFEST_V3? browser.action: browser.browserAction;
 
-const buttonIconURL = settings.buttonIconURL();
-setActionIcon(buttonIconURL);
-
 action.onClicked.addListener(actionOnClick);
-
 async function actionOnClick() {
     await settings.load();
 
@@ -25,6 +21,11 @@ async function actionOnClick() {
     else
         showOptions();
 }
+
+const buttonTitle = settings.buttonTitle();
+setActionTitle(buttonTitle);
+const buttonIconURL = settings.buttonIconURL();
+setActionIcon(buttonIconURL);
 
 function showOptions() {
     browser.tabs.create({url: "ui/options.html", active: true});

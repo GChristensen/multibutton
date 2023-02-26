@@ -2,6 +2,8 @@ import {settings} from "../settings.js";
 
 const SETTINGS_URL = "ui/options.html";
 
+const CTX_MENU_TARGET = _MANIFEST_V3? "action": "browser_action";
+
 class ContextMenu {
     constructor() {
     }
@@ -24,11 +26,11 @@ class ContextMenu {
     }
 
     #createContextMenuItem(title, url) {
-        browser.contextMenus.create({id: url, title, contexts: ["browser_action"]});
+        browser.contextMenus.create({id: url, title, contexts: [CTX_MENU_TARGET]});
     }
 
     #createSeparator() {
-        browser.contextMenus.create({id: "separator", type: "separator", contexts: ["browser_action"]});
+        browser.contextMenus.create({id: "separator", type: "separator", contexts: [CTX_MENU_TARGET]});
     }
 
     #removeContextMenuItem(id) {
