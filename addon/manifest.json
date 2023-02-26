@@ -2,7 +2,7 @@
   "description": "MultiButton",
   "manifest_version": 3,
   "name": "MultiButton",
-  "version": "0.3",
+  "version": "0.3.1",
 
   "icons": {
     "48": "ui/icons/logo.svg"

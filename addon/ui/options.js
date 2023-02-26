@@ -5,6 +5,8 @@ import {contextMenu} from "./contextmenu.js";
 $(initPage);
 
 async function initPage() {
+    await settings.load();
+
     const buttonIconURLText = $("#button-icon-url");
     const buttonIconURL = settings.buttonIconURL();
     buttonIconURLText.val(buttonIconURL);
