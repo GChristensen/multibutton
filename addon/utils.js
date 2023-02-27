@@ -22,5 +22,20 @@ export function setActionTitle(title) {
         action.setTitle({title});
     else
         action.setTitle({title: _ADDON_NAME});
+}
 
+export function showNotification(args) {
+    if (typeof arguments[0] === "string")
+        args = {message: arguments[0]};
+
+    const iconUrl = _BACKGROUND_PAGE
+        ? "/icons/scrapyard.svg"
+        : "/icons/logo128.png";
+
+    return browser.notifications.create(`sbi-notification-${args.type}`, {
+        type: args.type ? args.type : "basic",
+        title: args.title ? args.title : "Scrapyard",
+        message: args.message,
+        iconUrl
+    });
 }

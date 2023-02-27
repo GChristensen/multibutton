@@ -1,5 +1,5 @@
 import {settings} from "../settings.js";
-import {setActionIcon, setActionTitle} from "../utils.js";
+import {setActionIcon, setActionTitle, showNotification} from "../utils.js";
 import {contextMenu} from "./contextmenu.js";
 
 $(initPage);
