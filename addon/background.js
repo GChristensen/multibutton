@@ -22,11 +22,6 @@ async function actionOnClick() {
         showOptions();
 }
 
-const buttonTitle = settings.buttonTitle();
-setActionTitle(buttonTitle);
-const buttonIconURL = settings.buttonIconURL();
-setActionIcon(buttonIconURL);
-
 function showOptions() {
     browser.tabs.create({url: "ui/options.html", active: true});
 }
@@ -36,3 +31,11 @@ contextMenu.create();
 browser.contextMenus.onClicked.addListener(menuInfo => {
     browser.tabs.create({url: menuInfo.menuItemId, active: true});
 });
+
+(async () => {
+    await settings.load();
+    const buttonTitle = settings.buttonTitle();
+    setActionTitle(buttonTitle);
+    const buttonIconURL = settings.buttonIconURL();
+    setActionIcon(buttonIconURL);
+})();
